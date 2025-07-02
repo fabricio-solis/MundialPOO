@@ -1,0 +1,80 @@
+@startuml
+class mundial.Grupo {
+- String nombre
+- ArrayList<Equipo> equipos
++ <<Create>> Grupo(String,ArrayList<Equipo>)
++ String getNombre()
++ ArrayList<Equipo> getEquipos()
++ void mostrarResultados()
++ ArrayList<Equipo> clasificarDosEquipos()
+}
+
+
+class mundial.Partido {
+- Equipo equipo1
+- Equipo equipo2
+- Resultado resultado
++ <<Create>> Partido(Equipo,Equipo,Resultado)
++ Equipo getEquipo1()
++ Equipo getEquipo2()
++ Resultado getResultado()
+- void asignarPuntos()
++ void mostrarPartido()
+}
+
+
+class mundial.Main {
++ {static} void main(String[])
++ {static} void generarPartidosDeGrupo(Grupo)
+}
+
+class mundial.Resultado {
+- int golesEquipo1
+- int golesEquipo2
++ <<Create>> Resultado(int,int)
++ int getGolesEquipo1()
++ int getGolesEquipo2()
++ int obtenerGanador()
++ String mostrarResultado()
+}
+
+
+class mundial.Llave {
+- String nombre
+- ArrayList<Equipo> clasificados
++ <<Create>> Llave(String)
++ String getNombre()
++ ArrayList<Equipo> getClasificados()
++ void jugarLlave()
++ void mostrarResultados()
+}
+
+
+abstract class mundial.EtapaMundial {
+# ArrayList<Partido> partidos
++ <<Create>> EtapaMundial()
++ ArrayList<Partido> getPartidos()
++ void agregarPartido(Partido)
++ {abstract}void mostrarResultados()
+}
+
+
+class mundial.Equipo {
+- String nombre
+- int puntos
+- ArrayList<Partido> partidosJugados
++ <<Create>> Equipo(String)
++ String getNombre()
++ int getPuntos()
++ void setPuntos(int)
++ ArrayList<Partido> getPartidosJugados()
++ void agregarPartido(Partido)
++ void mostrarEstadisticas()
+}
+
+
+
+
+mundial.EtapaMundial <|-- mundial.Grupo
+mundial.EtapaMundial <|-- mundial.Llave
+@enduml
