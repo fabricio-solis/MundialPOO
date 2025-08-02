@@ -45,65 +45,34 @@ public class Main {
 
         // 5. Octavos de Final
         Llave octavos = new Llave("Octavos de Final");
-
-        for (int i = 0; i < clasificados.size(); i += 2) {
-            Equipo e1 = clasificados.get(i);
-            Equipo e2 = clasificados.get(i + 1);
-            Resultado r = new Resultado((int) (Math.random() * 5), (int) (Math.random() * 5));
-            Partido p = new Partido(e1, e2, r);
-            octavos.agregarPartido(p);
-        }
-
+        octavos.construirLlave(clasificados);
         octavos.jugarLlave();
         octavos.mostrarResultados();
 
         // 6. Cuartos de Final
         Llave cuartos = new Llave("Cuartos de Final");
-        ArrayList<Equipo> octavosGanadores = octavos.getClasificados();
-
-        for (int i = 0; i < octavosGanadores.size(); i += 2) {
-            Equipo e1 = octavosGanadores.get(i);
-            Equipo e2 = octavosGanadores.get(i + 1);
-            Resultado r = new Resultado((int) (Math.random() * 5), (int) (Math.random() * 5));
-            Partido p = new Partido(e1, e2, r);
-            cuartos.agregarPartido(p);
-        }
-
+        cuartos.construirLlave(octavos.getClasificados());
         cuartos.jugarLlave();
         cuartos.mostrarResultados();
 
         // 7. Semifinal
         Llave semifinal = new Llave("Semifinal");
-        ArrayList<Equipo> cuartosGanadores = cuartos.getClasificados();
-
-        for (int i = 0; i < cuartosGanadores.size(); i += 2) {
-            Equipo e1 = cuartosGanadores.get(i);
-            Equipo e2 = cuartosGanadores.get(i + 1);
-            Resultado r = new Resultado((int) (Math.random() * 5), (int) (Math.random() * 5));
-            Partido p = new Partido(e1, e2, r);
-            semifinal.agregarPartido(p);
-        }
-
+        semifinal.construirLlave(cuartos.getClasificados());
         semifinal.jugarLlave();
         semifinal.mostrarResultados();
 
         // 8. Final
-        Llave finalMundial = new Llave("Final");
-        ArrayList<Equipo> finalistas = semifinal.getClasificados();
-
-        Equipo e1 = finalistas.get(0);
-        Equipo e2 = finalistas.get(1);
-        Resultado r = new Resultado((int) (Math.random() * 5), (int) (Math.random() * 5));
-        Partido p = new Partido(e1, e2, r);
-        finalMundial.agregarPartido(p);
-
+        Llave finalMundial = new Llave("Final del Mundial");
+        finalMundial.construirLlave(semifinal.getClasificados());
         finalMundial.jugarLlave();
         finalMundial.mostrarResultados();
 
-        System.out.println("\n🏆 ¡El campeón del Mundial es: " + finalMundial.getClasificados().get(0).getNombre() + "!");
+        // 9. Campeón
+        System.out.println("\n🏆 ¡El campeón del Mundial es: " +
+                finalMundial.getClasificados().get(0).getNombre() + "!");
     }
 
-    // Función para generar los 6 partidos por grupo con resultados aleatorios
+    // Método auxiliar para generar los partidos del grupo (6 combinaciones)
     public static void generarPartidosDeGrupo(Grupo grupo) {
         ArrayList<Equipo> eq = grupo.getEquipos();
 

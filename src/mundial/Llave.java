@@ -20,24 +20,33 @@ public class Llave extends EtapaMundial {
         return clasificados;
     }
 
-    // metodo para jugar los partidos y clasificar ganadores
+    // Metodo Mejorado
+    public void construirLlave(ArrayList<Equipo> equiposClasificados) {
+        for (int i = 0; i < equiposClasificados.size(); i += 2) {
+            Equipo e1 = equiposClasificados.get(i);
+            Equipo e2 = equiposClasificados.get(i + 1);
+            Resultado resultado = new Resultado((int) (Math.random() * 5), (int) (Math.random() * 5));
+            Partido partidoGenerado = new Partido(e1, e2, resultado);
+            this.agregarPartido(partidoGenerado);
+        }
+    }
+
     public void jugarLlave() {
-        for (Partido p : partidos) {
-            Resultado r = p.getResultado();
-            int ganador = r.obtenerGanador();
+        for (Partido partido : partidos) {
+            Resultado resultado = partido.getResultado();
+            int ganador = resultado.obtenerGanador();
 
             if (ganador == 1) {
-                clasificados.add(p.getEquipo1());
+                clasificados.add(partido.getEquipo1());
             } else if (ganador == 2) {
-                clasificados.add(p.getEquipo2());
+                clasificados.add(partido.getEquipo2());
             } else {
-                // Por si hay empate, decidimos con más goles (puede mejorarse)
-                clasificados.add(p.getEquipo1()); // decisión arbitraria (se puede mejorar con penales, etc.)
+                // Si empatan, elegimos arbitrariamente al primero (se puede mejorar)
+                clasificados.add(partido.getEquipo1());
             }
         }
     }
 
-    // metodo polimórfico
     @Override
     public void mostrarResultados() {
         System.out.println("Resultados de la llave: " + nombre);
@@ -51,4 +60,3 @@ public class Llave extends EtapaMundial {
         }
     }
 }
-
