@@ -1,0 +1,73 @@
+
+@startuml
+
+abstract class EtapaMundial {
+    - partidos : ArrayList<Partido>
+    + agregarPartido(partido : Partido) : void
+    + mostrarResultados() : void
+}
+
+class Equipo {
+    - nombre : String
+    - puntos : int
+    - partidosJugados : ArrayList<Partido>
+    + getNombre() : String
+    + getPuntos() : int
+    + setPuntos(puntos : int) : void
+    + agregarPartido(partido : Partido) : void
+    + mostrarEstadisticas() : void
+}
+
+class Resultado {
+    - golesEquipo1 : int
+    - golesEquipo2 : int
+    + getGolesEquipo1() : int
+    + getGolesEquipo2() : int
+    + obtenerGanador() : int
+    + mostrarResultado() : String
+}
+
+class Partido {
+    - equipo1 : Equipo
+    - equipo2 : Equipo
+    - resultado : Resultado
+    + getEquipo1() : Equipo
+    + getEquipo2() : Equipo
+    + getResultado() : Resultado
+    + mostrarPartido() : void
+}
+
+class Grupo {
+    - nombre : String
+    - equipos : ArrayList<Equipo>
+    + clasificarDosEquipos() : ArrayList<Equipo>
+    + mostrarResultados() : void
+}
+
+class Llave {
+    - nombre : String
+    - clasificados : ArrayList<Equipo>
+    + construirLlave(clasificados : ArrayList<Equipo>) : void
+    + jugarLlave() : void
+    + mostrarResultados() : void
+}
+
+class Main {
+    + main(args : String[]) : void
+    + generarPartidosDeGrupo(grupo : Grupo) : void
+}
+
+EtapaMundial <|-- Grupo
+EtapaMundial <|-- Llave
+Partido --> Equipo
+Partido --> Resultado
+Grupo --> Equipo
+Grupo --> Partido
+Llave --> Partido
+Llave --> Equipo
+Equipo --> Partido
+Main --> Grupo
+Main --> Llave
+Main --> Equipo
+
+@enduml
